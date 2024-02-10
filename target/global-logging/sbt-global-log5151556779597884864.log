@@ -1,0 +1,122 @@
+[debug] > Exec(early(addDefaultCommands), None, None)
+[debug] > Exec(addDefaultCommands, None, None)
+[debug] > Exec(early(initialize), None, None)
+[debug] > Exec(initialize, None, None)
+[debug] > Exec(boot, None, None)
+[debug] > Exec(writeSbtVersion, None, None)
+[debug] > Exec(reload, None, None)
+[debug] > Exec(sbtStashOnFailure, None, None)
+[debug] > Exec(onFailure loadFailed, None, None)
+[debug] > Exec(loadp, None, None)
+[info] welcome to sbt 1.9.8 (Oracle Corporation Java 19.0.1)
+[debug]       Load.loadUnit: plugins took 36.24175ms
+[debug]       Load.loadUnit: defsScala took 0.109791ms
+[debug] [Loading] Scanning directory /Users/erasyl/.sbt/1.0/plugins
+[debug] [Loading] Found non-root projects 
+[debug] [Loading] Done in /Users/erasyl/.sbt/1.0/plugins, returning: ()
+[debug] deducing auto plugins based on known facts Set(Atom(sbt.plugins.CorePlugin)) and clauses Clauses(Clause(Atom(sbt.plugins.JvmPlugin),Set(Atom(sbt.plugins.IvyPlugin)))
+[debug] Clause(Atom(sbt.ScriptedPlugin),Set(Atom(sbt.plugins.JvmPlugin)))
+[debug] Clause(Atom(sbt.plugins.SbtPlugin),Set(Atom(sbt.ScriptedPlugin)))
+[debug] Clause(Atom(sbt.plugins.SemanticdbPlugin),Set(Atom(sbt.plugins.JvmPlugin)))
+[debug] Clause(Atom(sbt.plugins.JUnitXmlReportPlugin),Set(Atom(sbt.plugins.JvmPlugin)))
+[debug] Clause(Atom(sbt.plugins.MiniDependencyTreePlugin),Set(Atom(sbt.plugins.JvmPlugin)))
+[debug] Clause(Atom(sbt.plugins.CorePlugin),Set(Atom(sbt.plugins.IvyPlugin)))
+[debug] Clause(Atom(sbt.plugins.IvyPlugin),Set(Atom(sbt.plugins.JvmPlugin)))
+[debug] Clause(Atom(sbt.plugins.JvmPlugin),Set(Atom(sbt.plugins.SemanticdbPlugin)))
+[debug] Clause(Atom(sbt.plugins.JvmPlugin),Set(Atom(sbt.plugins.JUnitXmlReportPlugin)))
+[debug] Clause(Atom(sbt.plugins.CorePlugin),Set(Atom(sbt.plugins.Giter8TemplatePlugin)))
+[debug] Clause(Atom(sbt.plugins.JvmPlugin),Set(Atom(sbt.plugins.MiniDependencyTreePlugin))))
+[debug]   :: deduced result: Matched(sbt.plugins.CorePlugin,sbt.plugins.Giter8TemplatePlugin,sbt.plugins.IvyPlugin,sbt.plugins.JvmPlugin,sbt.plugins.MiniDependencyTreePlugin,sbt.plugins.JUnitXmlReportPlugin,sbt.plugins.SemanticdbPlugin)
+[debug] Plugins.deducer#function took 5.96875 ms
+[debug]           Load.resolveProject(global-plugins) took 17.387625ms
+[debug]         Load.loadTransitive: finalizeProject(Project(id global-plugins, base: /Users/erasyl/.sbt/1.0/plugins, plugins: List(<none>))) took 32.150625ms
+[debug] [Loading] Done in /Users/erasyl/.sbt/1.0/plugins, returning: (global-plugins)
+[debug]       Load.loadUnit: loadedProjectsRaw took 41.56375ms
+[debug]       Load.loadUnit: cleanEvalClasses took 0.082375ms
+[debug]     Load.loadUnit(file:/Users/erasyl/.sbt/1.0/plugins/, ...) took 81.320917ms
+[debug]   Load.apply: load took 1257.0375ms
+[debug]   Load.apply: resolveProjects took 3.440917ms
+[debug]   Load.apply: finalTransforms took 34.017542ms
+[debug]   Load.apply: config.delegates took 2.862959ms
+[debug]   Load.apply: Def.make(settings)... took 154.371542ms
+[debug]   Load.apply: structureIndex took 37.841542ms
+[debug]   Load.apply: mkStreams took 0.607083ms
+[info] loading global plugins from /Users/erasyl/.sbt/1.0/plugins
+[debug] Running task... Cancel: Signal, check cycles: false, forcegc: true
+[debug] Load.defaultLoad until apply took 1971.859916ms
+[debug]           Load.loadUnit: plugins took 6.894333ms
+[debug]           Load.loadUnit: defsScala took 0.001625ms
+[debug] [Loading] Scanning directory /Users/erasyl/Desktop/code/Scala/ScalaMGNew/project
+[debug] [Loading] Found non-root projects 
+[debug] [Loading] Done in /Users/erasyl/Desktop/code/Scala/ScalaMGNew/project, returning: ()
+[debug] deducing auto plugins based on known facts Set(Atom(sbt.plugins.CorePlugin)) and clauses Clauses(Clause(Atom(sbt.plugins.JvmPlugin),Set(Atom(sbt.plugins.IvyPlugin)))
+[debug] Clause(Atom(sbt.ScriptedPlugin),Set(Atom(sbt.plugins.JvmPlugin)))
+[debug] Clause(Atom(sbt.plugins.SbtPlugin),Set(Atom(sbt.ScriptedPlugin)))
+[debug] Clause(Atom(sbt.plugins.SemanticdbPlugin),Set(Atom(sbt.plugins.JvmPlugin)))
+[debug] Clause(Atom(sbt.plugins.JUnitXmlReportPlugin),Set(Atom(sbt.plugins.JvmPlugin)))
+[debug] Clause(Atom(sbt.plugins.MiniDependencyTreePlugin),Set(Atom(sbt.plugins.JvmPlugin)))
+[debug] Clause(Atom(sbt.plugins.CorePlugin),Set(Atom(sbt.plugins.IvyPlugin)))
+[debug] Clause(Atom(sbt.plugins.IvyPlugin),Set(Atom(sbt.plugins.JvmPlugin)))
+[debug] Clause(Atom(sbt.plugins.JvmPlugin),Set(Atom(sbt.plugins.SemanticdbPlugin)))
+[debug] Clause(Atom(sbt.plugins.JvmPlugin),Set(Atom(sbt.plugins.JUnitXmlReportPlugin)))
+[debug] Clause(Atom(sbt.plugins.CorePlugin),Set(Atom(sbt.plugins.Giter8TemplatePlugin)))
+[debug] Clause(Atom(sbt.plugins.JvmPlugin),Set(Atom(sbt.plugins.MiniDependencyTreePlugin))))
+[debug]   :: deduced result: Matched(sbt.plugins.CorePlugin,sbt.plugins.Giter8TemplatePlugin,sbt.plugins.IvyPlugin,sbt.plugins.JvmPlugin,sbt.plugins.MiniDependencyTreePlugin,sbt.plugins.JUnitXmlReportPlugin,sbt.plugins.SemanticdbPlugin)
+[debug] Plugins.deducer#function took 0.877708 ms
+[debug]               Load.resolveProject(scalamgnew-build) took 0.600042ms
+[debug]             Load.loadTransitive: finalizeProject(Project(id scalamgnew-build, base: /Users/erasyl/Desktop/code/Scala/ScalaMGNew/project, plugins: List(<none>))) took 1.728541ms
+[debug] [Loading] Done in /Users/erasyl/Desktop/code/Scala/ScalaMGNew/project, returning: (scalamgnew-build)
+[debug]           Load.loadUnit: loadedProjectsRaw took 2.924666ms
+[debug]           Load.loadUnit: cleanEvalClasses took 0.00425ms
+[debug]         Load.loadUnit(file:/Users/erasyl/Desktop/code/Scala/ScalaMGNew/project/, ...) took 10.131709ms
+[debug]       Load.apply: load took 10.734708ms
+[debug]       Load.apply: resolveProjects took 0.068916ms
+[debug]       Load.apply: finalTransforms took 4.438458ms
+[debug]       Load.apply: config.delegates took 0.199041ms
+[debug]       Load.apply: Def.make(settings)... took 48.339042ms
+[debug]       Load.apply: structureIndex took 14.580833ms
+[debug]       Load.apply: mkStreams took 0.001833ms
+[info] loading project definition from /Users/erasyl/Desktop/code/Scala/ScalaMGNew/project
+[debug] Running task... Cancel: Signal, check cycles: false, forcegc: true
+[debug]     Load.loadUnit: plugins took 205.927125ms
+[debug]     Load.loadUnit: defsScala took 0.001459ms
+[debug] [Loading] Scanning directory /Users/erasyl/Desktop/code/Scala/ScalaMGNew
+[debug]       Load.loadUnit: mkEval took 2.69175ms
+[debug] [Loading] Found root project root w/ remaining 
+[debug] deducing auto plugins based on known facts Set(Atom(sbt.plugins.CorePlugin)) and clauses Clauses(Clause(Atom(sbt.plugins.JvmPlugin),Set(Atom(sbt.plugins.IvyPlugin)))
+[debug] Clause(Atom(sbt.ScriptedPlugin),Set(Atom(sbt.plugins.JvmPlugin)))
+[debug] Clause(Atom(sbt.plugins.SbtPlugin),Set(Atom(sbt.ScriptedPlugin)))
+[debug] Clause(Atom(sbt.plugins.SemanticdbPlugin),Set(Atom(sbt.plugins.JvmPlugin)))
+[debug] Clause(Atom(sbt.plugins.JUnitXmlReportPlugin),Set(Atom(sbt.plugins.JvmPlugin)))
+[debug] Clause(Atom(sbt.plugins.MiniDependencyTreePlugin),Set(Atom(sbt.plugins.JvmPlugin)))
+[debug] Clause(Atom(sbt.plugins.CorePlugin),Set(Atom(sbt.plugins.IvyPlugin)))
+[debug] Clause(Atom(sbt.plugins.IvyPlugin),Set(Atom(sbt.plugins.JvmPlugin)))
+[debug] Clause(Atom(sbt.plugins.JvmPlugin),Set(Atom(sbt.plugins.SemanticdbPlugin)))
+[debug] Clause(Atom(sbt.plugins.JvmPlugin),Set(Atom(sbt.plugins.JUnitXmlReportPlugin)))
+[debug] Clause(Atom(sbt.plugins.CorePlugin),Set(Atom(sbt.plugins.Giter8TemplatePlugin)))
+[debug] Clause(Atom(sbt.plugins.JvmPlugin),Set(Atom(sbt.plugins.MiniDependencyTreePlugin))))
+[debug]   :: deduced result: Matched(sbt.plugins.CorePlugin,sbt.plugins.Giter8TemplatePlugin,sbt.plugins.IvyPlugin,sbt.plugins.JvmPlugin,sbt.plugins.MiniDependencyTreePlugin,sbt.plugins.JUnitXmlReportPlugin,sbt.plugins.SemanticdbPlugin)
+[debug] Plugins.deducer#function took 0.670375 ms
+[info] loading settings for project root from build.sbt ...
+[debug]         Load.resolveProject(root) took 1.216125ms
+[debug]       Load.loadTransitive: finalizeProject(Project(id root, base: /Users/erasyl/Desktop/code/Scala/ScalaMGNew, plugins: List(<none>))) took 2.225542ms
+[debug] [Loading] Done in /Users/erasyl/Desktop/code/Scala/ScalaMGNew, returning: (root)
+[debug]     Load.loadUnit: loadedProjectsRaw took 1107.264833ms
+[debug]     Load.loadUnit: cleanEvalClasses took 3.590625ms
+[debug]   Load.loadUnit(file:/Users/erasyl/Desktop/code/Scala/ScalaMGNew/, ...) took 1317.179167ms
+[debug] Load.apply: load took 1318.069833ms
+[debug] Load.apply: resolveProjects took 0.053708ms
+[debug] Load.apply: finalTransforms took 3.404125ms
+[debug] Load.apply: config.delegates took 0.156584ms
+[debug] Load.apply: Def.make(settings)... took 39.552834ms
+[debug] Load.apply: structureIndex took 25.039208ms
+[debug] Load.apply: mkStreams took 0.001916ms
+[info] set current project to ScalaMGNew (in build file:/Users/erasyl/Desktop/code/Scala/ScalaMGNew/)
+[debug] > Exec(sbtPopOnFailure, None, None)
+[debug] > Exec(resumeFromFailure, None, None)
+[debug] > Exec(notifyUsersAboutShell, None, None)
+[debug] > Exec(iflast shell, None, None)
+[debug] > Exec(shell, None, None)
+[info] sbt server started at local:///Users/erasyl/.sbt/1.0/server/cfb8827a29dfbe65786a/sock
+[debug] Writing bsp connection file
+[info] started sbt server
