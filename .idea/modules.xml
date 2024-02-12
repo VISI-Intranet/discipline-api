@@ -4,6 +4,8 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/ScalaMGNew.iml" filepath="$PROJECT_DIR$/.idea/modules/ScalaMGNew.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/ScalaMGNew-build.iml" filepath="$PROJECT_DIR$/.idea/modules/ScalaMGNew-build.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../.idea/modules/visi-organization.iml" filepath="$PROJECT_DIR$/../.idea/modules/visi-organization.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../.idea/modules/visi-organization-build.iml" filepath="$PROJECT_DIR$/../.idea/modules/visi-organization-build.iml" />
     </modules>
   </component>
 </project>
