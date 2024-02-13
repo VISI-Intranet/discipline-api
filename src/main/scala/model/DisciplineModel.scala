@@ -77,6 +77,7 @@ case class Discipline(
                        topics: Option[List[String]],
                        classrooms: Option[List[Int]],
                        language: Option[Languages.Languages],
-                       scheduleIds: Option[List[Int]]
+                       scheduleIds: Option[List[Int]] ,
+                       teachers: Option[List[ImportTeachModel]]
                      )
 

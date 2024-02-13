@@ -3,11 +3,10 @@ import akka.http.scaladsl.Http
 import akka.stream.ActorMaterializer
 import akka.http.scaladsl.server.Directives._
 import model.DiModel
+import model.ImportTeachModelParser.parseMessageList
 import routes.{DiRoute, DisciplineRoutes, TeacherRoute}
-
 import org.apache.spark.SparkConf
 import org.apache.spark.streaming.{Seconds, StreamingContext}
-import org.apache.spark.streaming.kafka010.{ConsumerStrategies, KafkaUtils, LocationStrategies}
 
 import scala.concurrent.{ExecutionContextExecutor, Future}
 import scala.concurrent.duration.{DurationInt, FiniteDuration}
@@ -32,15 +31,16 @@ object Main {
     val routes = TeacherRoute.route ~ DisciplineRoutes.route ~ DiRoute.route
 
 
+//    println(parseMessageList(RabbitMQConsumer.listenAndReturnResult("TeacherQueue", "TeacherPutRoutingQueue")))
+
     // Start the server
     val bindingFuture = Http().bindAndHandle(routes, "localhost", 8080)
 
     println("Server is online at http://localhost:8080/\nPress RETURN to stop...")
 
-    // Wait for user input to stop the server
+
     StdIn.readLine()
 
-    // Остановка Spark Streaming
 
 
     bindingFuture

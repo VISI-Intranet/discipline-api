@@ -16,6 +16,7 @@ lazy val root = (project in file("."))
       "com.typesafe.akka" %% "akka-actor" % "2.6.16",
       "io.circe" %% "circe-core" % "0.14.1",
       "io.circe" %% "circe-generic" % "0.14.1",
+      "io.circe" %% "circe-parser" % "0.14.1",
       "io.spray" %% "spray-json" % "1.3.6",
       "org.apache.kafka" %% "kafka" % "3.4.0",
       "org.apache.kafka" % "kafka-clients" % "3.4.0",
@@ -24,7 +25,8 @@ lazy val root = (project in file("."))
       "org.apache.spark" %% "spark-core" % "3.2.0",
       "org.apache.spark" %% "spark-streaming" % "3.2.0",
       "org.apache.spark" %% "spark-sql" % "3.2.0",
-      "org.apache.spark" %% "spark-streaming-kafka-0-10" % "3.2.0"
+      "com.rabbitmq" % "amqp-client" % "5.14.0",
+      "com.lightbend.akka" %% "akka-stream-alpakka-amqp" % "3.0.4"
 
     )
   )
