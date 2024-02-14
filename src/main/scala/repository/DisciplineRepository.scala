@@ -1,17 +1,14 @@
 package repository
 
-
-import RabbitMQ.RabbitMQConsumer.listenAndProcessMessages
 import model._
 import connection.MongoDBConnection
+import org.bson.types.ObjectId
 import org.mongodb.scala.Document
 import org.mongodb.scala.bson.{BsonArray, BsonDocument, BsonInt32, BsonString, ObjectId}
 
-import scala.concurrent.{ExecutionContext, Future, Promise}
+import scala.concurrent.{ExecutionContext, Future}
 import scala.jdk.CollectionConverters.CollectionHasAsScala
-import scala.util.Try
-import RabbitMQ._
-import model.ImportTeachModelParser.parseMessageList
+import scala.util.Try;
 
 
 object DisciplineRepository {
@@ -38,7 +35,6 @@ object DisciplineRepository {
           language = Option(Languages.withName(doc.getString("Language"))),
           scheduleIds = Option(Option(doc.getList("ScheduleIds", classOf[Integer])).map(_.asScala.map(_.toInt).toList).getOrElse(List.empty)),
           teachers = None
-
         )
 
       }.toList.sortBy(_.hours)).getOrElse(List.empty)
@@ -47,85 +43,34 @@ object DisciplineRepository {
 
   }
 
-  def getAllDiscipline(): Future[List[Discipline]] = {
-    val futureDiscipline = MongoDBConnection.disciplineCollection.find().toFuture()
 
-    futureDiscipline.flatMap { docs =>
-      val disciplineFutures = Option(docs).map(_.map { doc =>
-        listenAndProcessMessages("TeacherQueue", "TeacherPutRoutingQueue").flatMap { message =>
-          parseMessageList(message) match {
-            case Right(teachersList) =>
-              Future.successful(
-                Discipline(
-                  _id = doc.getString("_id"),
-                  disciplineName = Option(doc.getString("DisciplineName")),
-                  description = Option(doc.getString("Description")),
-                  credits = Option(doc.getInteger("Credits")),
-                  hours = Option(doc.getInteger("Hours")),
-                  disciplineType = Option(TypeOfDiscipline.withName(doc.getString("DisciplineType"))),
-                  teacherIds = Option(Option(doc.getList("TeacherIds", classOf[Integer])).map(_.asScala.map(_.toInt).toList).getOrElse(List.empty)),
-                  department = Option(doc.getString("Department")),
-                  studentIds = Option(Option(doc.getList("StudentIds", classOf[Integer])).map(_.asScala.map(_.toInt).toList).getOrElse(List.empty)),
-                  topics = Option(Option(doc.getList("Topics", classOf[String])).map(_.asScala.toList).getOrElse(List.empty)),
-                  classrooms = Option(Option(doc.getList("Classrooms", classOf[Integer])).map(_.asScala.map(_.toInt).toList).getOrElse(List.empty)),
-                  language = Option(Languages.withName(doc.getString("Language"))),
-                  scheduleIds = Option(Option(doc.getList("ScheduleIds", classOf[Integer])).map(_.asScala.map(_.toInt).toList).getOrElse(List.empty)),
-                  teachers = Option(teachersList)
-                )
-              )
-            case Left(errorMessage) =>
-              Future.failed(new Exception(s"Не удалось разобрать сообщения. Ошибка: $errorMessage"))
-          }
-        }
+  def getAllDiscipline(): Future[List[Discipline]] = {
+    val futureDiscipline = MongoDBConnection.disciplineCollection.find().toFuture();
+
+    futureDiscipline.map { docs =>
+      Option(docs).map(_.map { doc =>
+        Discipline(
+          _id = doc.getString("_id"),
+          disciplineName = Option(doc.getString("DisciplineName")),
+          description = Option(doc.getString("Description")),
+          credits = Option(doc.getInteger("Credits")),
+          hours = Option(doc.getInteger("Hours")),
+          disciplineType = Option(TypeOfDiscipline.withName(doc.getString("DisciplineType"))),
+          teacherIds = Option(Option(doc.getList("TeacherIds", classOf[Integer])).map(_.asScala.map(_.toInt).toList).getOrElse(List.empty)),
+          department = Option(doc.getString("Department")),
+          studentIds = Option(Option(doc.getList("StudentIds", classOf[Integer])).map(_.asScala.map(_.toInt).toList).getOrElse(List.empty)),
+          topics = Option(Option(doc.getList("Topics", classOf[String])).map(_.asScala.toList).getOrElse(List.empty)),
+          classrooms = Option(Option(doc.getList("Classrooms", classOf[Integer])).map(_.asScala.map(_.toInt).toList).getOrElse(List.empty)),
+          language = Option(Languages.withName(doc.getString("Language"))),
+          scheduleIds = Option(Option(doc.getList("ScheduleIds", classOf[Integer])).map(_.asScala.map(_.toInt).toList).getOrElse(List.empty)),
+          teachers = None
+        )
+
       }.toList).getOrElse(List.empty)
 
-      // Преобразуем список Future[Discipline] в Future[List[Discipline]]
-      Future.sequence(disciplineFutures)
     }
+
   }
-
-
-//  def getAllDiscipline(): Future[List[Discipline]] = {
-//    val futureDiscipline = MongoDBConnection.disciplineCollection.find().toFuture()
-//
-//    futureDiscipline.flatMap { docs =>
-//      val disciplineFutures = Option(docs).map(_.map { doc =>
-//        val teachersPromise = Promise[List[ImportTeachModel]]()
-//
-//        listenAndProcessMessages("TeacherQueue", "TeacherPutRoutingQueue", message => {
-//          parseMessageList(message) match {
-//            case Right(teachersList) =>
-//              teachersPromise.success(teachersList)
-//
-//            case Left(errorMessage) =>
-//              teachersPromise.failure(new Exception(s"Не удалось разобрать сообщения. Ошибка: $errorMessage"))
-//          }
-//        })
-//
-//        teachersPromise.future.map(teachersList =>
-//          Discipline(
-//            _id = doc.getString("_id"),
-//            disciplineName = Option(doc.getString("DisciplineName")),
-//            description = Option(doc.getString("Description")),
-//            credits = Option(doc.getInteger("Credits")),
-//            hours = Option(doc.getInteger("Hours")),
-//            disciplineType = Option(TypeOfDiscipline.withName(doc.getString("DisciplineType"))),
-//            teacherIds = Option(Option(doc.getList("TeacherIds", classOf[Integer])).map(_.asScala.map(_.toInt).toList).getOrElse(List.empty)),
-//            department = Option(doc.getString("Department")),
-//            studentIds = Option(Option(doc.getList("StudentIds", classOf[Integer])).map(_.asScala.map(_.toInt).toList).getOrElse(List.empty)),
-//            topics = Option(Option(doc.getList("Topics", classOf[String])).map(_.asScala.toList).getOrElse(List.empty)),
-//            classrooms = Option(Option(doc.getList("Classrooms", classOf[Integer])).map(_.asScala.map(_.toInt).toList).getOrElse(List.empty)),
-//            language = Option(Languages.withName(doc.getString("Language"))),
-//            scheduleIds = Option(Option(doc.getList("ScheduleIds", classOf[Integer])).map(_.asScala.map(_.toInt).toList).getOrElse(List.empty)),
-//            teachers = Option(teachersList)
-//          )
-//        )
-//      }.toList).getOrElse(List.empty)
-//
-//      // Преобразуем список Future[Discipline] в Future[List[Discipline]]
-//      Future.sequence(disciplineFutures)
-//    }
-//  }
   def getDisciplineById(disciplineId : String): Future[Option[Discipline]] = {
     val disciplineDocument = Document("_id" -> disciplineId)
 
@@ -146,7 +91,7 @@ object DisciplineRepository {
             classrooms = Option(Option(doc.getList("Classrooms", classOf[Integer])).map(_.asScala.map(_.toInt).toList).getOrElse(List.empty)),
             language = Option(Languages.withName(doc.getString("Language"))),
             scheduleIds = Option(Option(doc.getList("ScheduleIds", classOf[Integer])).map(_.asScala.map(_.toInt).toList).getOrElse(List.empty)),
-            teachers = None
+            teachers = RabbitMQ.Repo.RabbitMQTeacherIdsPublisher.publishTeacherIds(Option(Option(doc.getList("TeacherIds", classOf[Integer])).map(_.asScala.map(_.toInt).toList).getOrElse(List.empty)))
           )
         )
       case None => None;
@@ -180,9 +125,8 @@ object DisciplineRepository {
               topics = Option(Option(doc.getList("Topics", classOf[String])).map(_.asScala.toList).getOrElse(List.empty)),
               classrooms = Option(Option(doc.getList("Classrooms", classOf[Integer])).map(_.asScala.map(_.toInt).toList).getOrElse(List.empty)),
               language = Option(Languages.withName(doc.getString("Language"))),
-              scheduleIds = Option(Option(doc.getList("ScheduleIds", classOf[Integer])).map(_.asScala.map(_.toInt).toList).getOrElse(List.empty)),
+              scheduleIds = Option(Option(doc.getList("ScheduleIds", classOf[Integer])).map(_.asScala.map(_.toInt).toList).getOrElse(List.empty)) ,
               teachers = None
-
             )
           }.toList
         }

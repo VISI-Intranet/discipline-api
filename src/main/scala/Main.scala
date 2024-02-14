@@ -1,9 +1,8 @@
+import RabbitMQ.RabbitMQConsumer
 import akka.actor.ActorSystem
 import akka.http.scaladsl.Http
 import akka.stream.ActorMaterializer
 import akka.http.scaladsl.server.Directives._
-import model.DiModel
-import model.ImportTeachModelParser.parseMessageList
 import routes.{DiRoute, DisciplineRoutes, TeacherRoute}
 import org.apache.spark.SparkConf
 import org.apache.spark.streaming.{Seconds, StreamingContext}
@@ -30,8 +29,6 @@ object Main {
     // Routes
     val routes = TeacherRoute.route ~ DisciplineRoutes.route ~ DiRoute.route
 
-
-//    println(parseMessageList(RabbitMQConsumer.listenAndReturnResult("TeacherQueue", "TeacherPutRoutingQueue")))
 
     // Start the server
     val bindingFuture = Http().bindAndHandle(routes, "localhost", 8080)

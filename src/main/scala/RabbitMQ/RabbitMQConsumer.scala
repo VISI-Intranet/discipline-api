@@ -1,15 +1,17 @@
 package RabbitMQ
-
-import RabbitMQ.RabbitMQConnection.createConnection
-import RabbitMQ.{RabbitMQConnection, RabbitMQProducer}
+import akka.actor.ActorSystem
+import akka.stream.ActorMaterializer
+import akka.stream.scaladsl.{Sink, Source}
 import com.rabbitmq.client.{AMQP, DefaultConsumer, Envelope}
-import org.json4s.{DefaultFormats, jackson}
+import RabbitMQ.RabbitMQConnection
 
-import java.util.concurrent.ArrayBlockingQueue
-import scala.concurrent.{Future, Promise}
+import scala.concurrent.{ExecutionContext, Future, Promise}
 import scala.util.{Failure, Success}
 
 object RabbitMQConsumer {
+  implicit val system: ActorSystem = ActorSystem("RabbitMQConsumer")
+  implicit val materializer: ActorMaterializer = ActorMaterializer()
+  implicit val ec: ExecutionContext = system.dispatcher
 
   def listenAndProcessMessages(queueName: String, routingKey: String): Future[String] = {
     val (connection, channel) = RabbitMQConnection.createConnection()
@@ -29,21 +31,29 @@ object RabbitMQConsumer {
                                      body: Array[Byte]
                                    ): Unit = {
           val message = new String(body, "UTF-8")
+
+          if (message != null) {
+            // Complete the promise with the received message
+            messagePromise.success(message)
+          } else {
+            // Handle the case when the message is null
+            messagePromise.failure(new RuntimeException("Received null message from RabbitMQ"))
+          }
+
           // Complete the promise with the received message
           messagePromise.success(message)
         }
       }
 
-      // Start consuming messages
-      channel.basicConsume(queueName, true, consumer)
-
-      // Wait for the promise to be completed and return the result
-      messagePromise.future
+      // Start consuming messages using Akka Streams
+      Source.single(consumer)
+        .mapAsync(1)(_ => Future(channel.basicConsume(queueName, true, consumer)))
+        .runWith(Sink.ignore)
+        .flatMap(_ => messagePromise.future)
     } finally {
       // Don't forget to close the connection when done
       // This is just an example; in a real application, you might want to keep the connection open
       connection.close()
     }
   }
-
 }
