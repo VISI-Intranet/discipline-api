@@ -16,5 +16,5 @@ case class Discipline(
                        classrooms: Option[List[Int]],
                        language: String,
                        scheduleIds: Option[List[String]] ,
-                       teachers: Option[List[ImportTeacher]]
+                       teachers: Option[List[String]]
                      )

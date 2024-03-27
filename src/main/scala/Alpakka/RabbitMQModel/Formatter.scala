@@ -1,5 +1,7 @@
 package RabbitMQ.RabbitMQOperation.Operations
 
+import model.importModels.ImportTeacher
+
 import scala.concurrent.{ExecutionContext, Future}
 import scala.reflect.ClassTag
 
@@ -13,6 +15,63 @@ object Formatter {
     }
     value
   }
+
+
+  def parseTeacherString(input: String): List[ImportTeacher] = {
+    val teacherList = input.stripPrefix("List(").stripSuffix(")").split("Teacher").toList.drop(1)
+
+    teacherList.flatMap { teacher =>
+      val fields = teacher.stripPrefix("(").stripSuffix(")").split(", ").toList
+      if (fields.length >= 16) {
+        Some(ImportTeacher(
+          _id = fields(0),
+          name = parseOptionString(fields(1)),
+          age = parseOptionInt(fields(2)),
+          email = parseOptionString(fields(3)),
+          phoneNumber = parseOptionString(fields(4)),
+          education = parseOptionString(fields(5)),
+          qualification = parseOptionString(fields(6)),
+          experience = parseOptionInt(fields(7)),
+          scheduleId = parseOptionInt(fields(8)),
+          disciplinesId = parseOptionListString(fields(9)),
+          studentsId = parseOptionListString(fields(10)),
+          salary = parseOptionInt(fields(11)),
+          position = parseOptionString(fields(12)),
+          awards = parseOptionString(fields(13)),
+          certificationId = parseOptionString(fields(14)),
+          attestationId = parseOptionString(fields(15)),
+          discipline = None,
+          students = None,
+          studentsAverage = None,
+          documents = None
+        ))
+      } else {
+        None
+      }
+    }
+  }
+
+  def parseOptionString(input: String): Option[String] = {
+    input match {
+      case "None" => None
+      case str => Some(str.stripPrefix("Some(").stripSuffix(")"))
+    }
+  }
+
+  def parseOptionInt(input: String): Option[Int] = {
+    input match {
+      case "None" => None
+      case str => Some(str.stripPrefix("Some(").stripSuffix(")").toInt)
+    }
+  }
+
+  def parseOptionListString(input: String): Option[List[String]] = {
+    input match {
+      case "None" => None
+      case str => Some(str.stripPrefix("Some(List(").stripSuffix("))").split(", ").toList)
+    }
+  }
+
 
   def extractContent[T: ClassTag](obj: T): String = {
     val fields = obj.getClass.getDeclaredFields.map(_.getName)

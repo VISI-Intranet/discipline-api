@@ -14,7 +14,7 @@ import org.mongodb.scala.model.Filters
 object DisciplineRepository {
 
   implicit val ec: ExecutionContext = scala.concurrent.ExecutionContext.global
-  def getDisciplineById(disciplineId: String, connectionFactory: ConnectionFactory): Future[Option[Discipline]] = {
+  def getDisciplineById(disciplineId: String): Future[Option[Discipline]] = {
     val filter = Filters.eq("_id", disciplineId)
     val futureDiscipline = MongoDBConnection.disciplineCollection.find(filter).headOption()
 

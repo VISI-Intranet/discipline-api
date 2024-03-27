@@ -17,13 +17,11 @@ object Main extends App {
   implicit val system: ActorSystem = ActorSystem("web-service")
   implicit val executionContext: ExecutionContextExecutor = system.dispatcher
   implicit val materializer: ActorMaterializer = ActorMaterializer()
+
   implicit val amqpConnectionProvider: AmqpConnectionProvider = AmqpLocalConnectionProvider
 
 
-  val connectionFactory = new  ConnectionFactory
-
-
-  val routes = DisciplineRoutes(connectionFactory).route
+  val routes = DisciplineRoutes(amqpConnectionProvider).route
 
   val subMQModel: RabbitMQModel = RabbitMQModel("StudentPublisher", "", "")
 
